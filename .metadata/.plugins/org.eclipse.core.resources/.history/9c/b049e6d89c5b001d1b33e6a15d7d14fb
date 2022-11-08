@@ -1,0 +1,92 @@
+package main;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.JPanel;
+
+public class GamePanel extends JPanel implements Runnable{
+	
+	// Ustawienia ekranu
+	final int originalTitleSize = 16; //16x16 znakow
+	final int scale = 3;
+	
+	final int tileSize = originalTitleSize * scale; //wielkosc 16x16 * 3 = 48
+	final int maxScreenCol = 16; // x = 16 kolumn moze byc np 18
+	final int maxScreenRow = 12; //y = 12 wierszy moze byc np 14
+	final int screenWidth = tileSize * maxScreenCol; // 48 * 16 = 768 piseli
+	final int screenHeight = tileSize * maxScreenRow; // 48 * 12 = 576 pixeli
+	
+	
+	Thread gameThread; //odwoluje sie do metody run()
+	
+	
+	//konstruktor game panelu
+	
+	public GamePanel() {
+		this.setPreferredSize(new Dimension(screenWidth, screenHeight) );
+		this.setBackground(Color.black);
+		this.setDoubleBuffered(true); //lepsze renderowanie
+	}
+	
+	public void startGameThread() {
+		gameThread = new Thread(this);
+		gameThread.start();
+	}
+
+	@Override
+	public void run() {
+		// TODO czas gry
+		
+		int c =0;
+		
+		while(gameThread != null) {
+			c++;
+			System.out.println("NO siema eniu"+c); 		// aktualizacja klatek gry
+														// informacje o rysowaniu 
+			
+			update();	// aktualizowanie
+			
+			repaint();  // mlaowanie
+			
+		}
+		
+	}
+	
+	public void update() {
+		
+	}
+	
+	public void paintComponent(Graphics g) { 			// Graphics funkcja do rysowania obiektow na ekranie
+		
+		super.paintComponent(g);
+		
+		Graphics2D g2 = (Graphics2D)g;					// Graphics2D rozszerza klase Graphics dla wiekszej kontroli, np koordynatów, tekstu itp
+		
+		g2.setColor(Color.white);
+		
+		g2.fillRect(100, 100, tileSize, tileSize);
+		
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+D:\__NAJNOWSZE AAAAAAAAA\5 SEM PG\JPWP\NAJNOWSZE\.metadata\.plugins\org.eclipse.jdt.core
+869061006.index
+3554027885.index
+1865797976.index
