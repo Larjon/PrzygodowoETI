@@ -1,0 +1,9 @@
+package entity;
+
+//nadrzedna klasa dla wszystkich postaci gracza, npc
+
+public class Entity {
+	
+	public int x,y;
+	public int speed;
+}

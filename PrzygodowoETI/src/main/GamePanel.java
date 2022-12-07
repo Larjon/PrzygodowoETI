@@ -7,23 +7,29 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Player;
+import tile.TileManager;
+
 public class GamePanel extends JPanel implements Runnable{
 	
 	// Ustawienia ekranu
 	final int originalTitleSize = 16; 									// 16x16 znakow
 	final int scale = 3;
 	
-	final int tileSize = originalTitleSize * scale; 					// wielkosc 16x16 * 3 = 48
-	final int maxScreenCol = 16; 										// x = 16 kolumn moze byc np 18
-	final int maxScreenRow = 12; 										// y = 12 wierszy moze byc np 14
+	public final int tileSize = originalTitleSize * scale; 					// wielkosc 16x16 * 3 = 48
+	final int maxScreenCol = 16; 										// x = 16 kolumn moze byc np 18  //zmiana na publiczne
+    final int maxScreenRow = 12; 										// y = 12 wierszy moze byc np 14 //zmiana na publiczne
 	final int screenWidth = tileSize * maxScreenCol; 					// 48 * 16 = 768 piseli
 	final int screenHeight = tileSize * maxScreenRow; 					// 48 * 12 = 576 pixeli
 	
 	int FPS = 60;
 	
+	
+	TileManager tileM = new TileManager(this);
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread; //odwoluje sie do metody run()
 	
+	Player player = new Player(this, keyH);
 	
 	// Konstruktor game panelu
 	
@@ -134,12 +140,7 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 		
 	
-			
-			
-			
-			  								
-			
-			
+	
 		
 	}
 	
@@ -147,22 +148,10 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void update() {
 		
-		if(keyH.upPressed == true) {					// Poruszanie sie za pomocą klawiatury
-			playerY -= playerSpeed;
-		}
-		else if(keyH.downPressed == true) {
-			playerY += playerSpeed;
-		}
-		else if(keyH.leftPressed == true) {
-			playerX -= playerSpeed;
-		}
-		else if(keyH.rightPressed == true) {
-			playerX += playerSpeed;
-		}
+		player.update();
 			
 			
-			
-			
+
 	}
 	
 	public void paintComponent(Graphics g) { 			// Graphics funkcja do rysowania obiektow na ekranie
@@ -171,9 +160,8 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		Graphics2D g2 = (Graphics2D)g;					// Graphics2D rozszerza klase Graphics dla wiekszej kontroli, np koordynatów, tekstu itp
 		
-		g2.setColor(Color.white);
-		
-		g2.fillRect(playerX, playerY, tileSize, tileSize);
+		tileM.draw(g2);
+		player.draw(g2);
 		
 		g2.dispose();
 	}
