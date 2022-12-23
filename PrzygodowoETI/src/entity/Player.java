@@ -1,7 +1,8 @@
 package entity;
 
-import java.awt.Color;
+
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -15,19 +16,33 @@ public class Player extends Entity{
 	GamePanel gp;
 	KeyHandler keyH;
 	
+	public final int screenX;
+	public final int screenY;
+	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		
 		this.gp = gp;
 		this.keyH = keyH;
+		
+		screenX = gp.screenWidth/2 - (gp.tileSize/2);
+		screenY = gp.screenHeight/2 - (gp.tileSize/2); //dzielone na tile size aby byl na srodku
+		
+		solidArea = new Rectangle(); //4 paramtery
+		
+		solidArea.x = 8;
+		solidArea.y = 30;
+		solidArea.width = 28;
+		solidArea.height = 8;  //hitbox 
+		
 		
 		setDefaultValues();
 		getPlayerImage();
 	}
 	
 	public void setDefaultValues() {
-		x = 100;
-		y = 100;
-		speed = 4;
+		worldX = gp.tileSize *17; //zmiana z x i y to nie jest pozycja ekranu
+		worldY = gp.tileSize *17;
+		speed = 8;
 		direction = "down"; 		//pierwsza pozycja startowa
 	}
 	
@@ -55,25 +70,53 @@ public class Player extends Entity{
 		
 		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true ) {
 			
-			if(keyH.upPressed == true) {
+			if(keyH.upPressed == true) {	  // animacja nie jest wykonywana ciągle
 				direction = "up";		
-						            // Poruszanie sie za pomocą klawiatury
-				y -= speed;
+						                      // Poruszanie sie za pomocą klawiatury
+				
 			}
 			else if(keyH.downPressed == true) {
 				direction = "down";
-				y += speed;
+				
 			}
 			else if(keyH.leftPressed == true) {
 				direction = "left";
-				x -= speed;
+				
 			}
 			else if(keyH.rightPressed == true) {
 				direction = "right";
-				x += speed;
+				
 			}
 			
-			spriteCounter++;
+			//Sprawdzenie kolizji
+			
+			
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			//Jezeli colision = false, to nie może się ruszać
+			
+			if(collisionOn == false) {
+				
+				switch(direction) {
+				case "up":
+					worldY -= speed;
+					break;
+				case "down":
+					worldY += speed;
+					break;
+				case "left":
+					worldX -= speed;
+					break;
+				case "right":
+					worldX += speed;
+					break;	
+				
+				}
+				
+			}
+			
+			spriteCounter++;				// zmiana wartosci zmiennej ktora deklaruje zmiane obrazka poruszania się
 			if(spriteCounter > 12) {
 				if(spriteNum == 1) {
 					spriteNum = 2;
@@ -141,7 +184,7 @@ public class Player extends Entity{
 			break;	
 		
 		}
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 		
 		
 	}

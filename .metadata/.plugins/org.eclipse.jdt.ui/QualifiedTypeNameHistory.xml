@@ -4,10 +4,14 @@
     <fullyQualifiedTypeName name="main.KeyHandler"/>
     <fullyQualifiedTypeName name="entity.Player"/>
     <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
-    <fullyQualifiedTypeName name="main.GamePanel"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
     <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
     <fullyQualifiedTypeName name="tile.TileManager"/>
     <fullyQualifiedTypeName name="java.io.InputStream"/>
+    <fullyQualifiedTypeName name="main.GamePanel"/>
+    <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+    <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+    <fullyQualifiedTypeName name="java.awt.Rectangle"/>
+    <fullyQualifiedTypeName name="entity.Entity"/>
 </qualifiedTypeNameHistroy>
